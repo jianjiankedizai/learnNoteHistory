@@ -1,0 +1,57 @@
+我们在学习gradle的时候大多数都仅仅是记住了一些配置参数而已。这种学习的结果总觉得像是盲人摸象
+
+因此本人决定梳理一下gradle的相关知识并仔细阅读了《深入理解Android之Gradle》这本书，现将所读
+所感作为笔记记录下来并分享如下：
+
+1，Gradle 中，每一个待编译的工程都叫一个Project。每一个Project 在构建的时候都包含
+一系列的Task。
+
+2，一个Project 到底包含多少个Task，其实是由编译脚本指定的插件决定。插件就是用来定义Task，
+并具体执行这些Task 的东西。具体的编译工作就是通过插件的方式来完成的。Task 和Task 之间往往是有依赖关系的
+
+3，每一个Library 和每一个App 都是单独的Project。根据Gradle 的要求，每一个Project
+在其根目录下都需要有一个build.gradle。build.gradle 文件就是该Project 的编译脚本。
+
+4，项目最外层的build.gradle一般干得活是：配置
+其他子Project 的。比如为子Project 添加一些属性。这个build.gradle 有没有都无所谓
+
+5，项目最外层的settings.gradle文件用来告诉Gradle，这个multiprojects 包含多少个子Project。
+
+6，settings.gradle 除了可以include 外，还可以设置一些函数。这些函数会在gradle
+构建整个工程任务的时候执行，所以，可以在settings 中做一些初始化的工作。
+
+7，gradle常用命令：
+	gradle project-path:tasks 其中project-path 是目录名	看某个ProjectTask 信息；
+	gradle clean 是执行清理任务；
+	gradle properites 用来查看所有属性信息；
+8，Gradle 工作包含三个阶段
+	1，执行settings.gradle
+	2，解析每个子目录中的build.gradl，结束之后会建立一个有向图来描述Task 之间的依赖关系
+	3，执行任务
+
+9，Gradle 主要有三种对象，在gradle 执行的时候，会将脚本转换成对应的对象
+	1，Gradle 对象：在整个执行过程中，只有一个对象。Gradle
+	对象的数据类型就是Gradle，一般很少去定制这个默认的配置脚本
+	2，Project 对象：每一个build.gradle 会转换成一个Project 对象
+	3，Settings 对象：每一个settings.gradle 都会转换成一个Settings 对象
+
+10，Gradle对象的属性：
+	1，HomeDir 是我在哪个目录存储的gradle 可执行程序
+	2，User Home Dir：是gradle 自己设置的目录，里边存储了一些配置文件，以及编译过程中的
+	缓存文件，生成的类文件，编译中依赖的插件等等	
+
+11，Project 对象：
+	一个Project 包含多少Task 往往是插件决定的。加载插件是调用它的apply 函数
+	apply plugin: 'com.android.library' <==如果是编译Library，则加载此插件
+	apply plugin: 'com.android.application' <==如果是编译Android APP，则加载此插件
+
+12，	通过ext 前缀来标示它是一个额外的属性。定义好之后，后面的存取就不需要ext 前缀了。
+	ext 属性支持Project 和Gradle 对象；
+	gradle 对象。它默认是Settings 和Project 的成员变量。可直接获取；
+
+
+
+
+
+
+

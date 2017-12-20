@@ -1,0 +1,15 @@
+android的IPC归纳
+
+基于c/s架构即Client和Server两个端（平等关系）
+进程之间实际是通过共享内存实现数据交换，服务端在共享内存中注册一个Ibinder引用保存了服务端的
+一些描述（包，类，全局变量等）
+
+通常做法：
+1定义aidl文件生成aidl接口（充当两个进程之间的通信协议）
+2生成的接口中有两个内部类Stub和Proxy，Stub是用于与客户端交互和Proxy
+用于和服务端交互
+3，调用系统中自带的一些服务，通过ServiceManager获取特定的服务，其实也是IPC通讯实现的，
+4，bindService方法实际上最终会调用到ActivityManagerNative.bindService();
+4，ActivityManagerService是系统提供的一种aidl接口映射，实现了
+
+

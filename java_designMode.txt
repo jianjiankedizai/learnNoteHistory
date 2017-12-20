@@ -1,0 +1,85 @@
+设计模式的目的是降低系统模块之间的耦合性，程序设计有23种设计模式分别是：
+
+创建型五种：工厂方法模式、抽象工厂模式、单例模式、建造者模式、原型模式。
+
+结构型七种：适配器模式、装饰器模式、代理模式、外观模式、桥接模式、组合模式、享元模式。
+
+行为型十一种：策略模式、模板方法模式、观察者模式、迭代子模式、责任链模式、命令模式、备忘录模式、状态模式、访问者模式、中介者模式、解释器模式。
+
+在实际开发中我们可以尝试将平时的写代码经历与以上对应一下:
+	工厂模式：Bitmap bmp = BitmapFactory.decodeFile(String pathName)这段代码是bitmap的创建使用的就是工厂模式
+
+	单例模式：LayoutInflater.from(context).inflate()这段代码是使用了一个单例的布局解析器
+
+	建造者模式：new AlertDialog.Builder(this).setIcon(R.drawable.ic_launcher).setTitle("提示").create().show();
+
+	原型模式：public class Intent implements Parcelable, Cloneable { ...
+ } 安卓中的Intent就使用了这种模式
+
+	适配器模式：listView.setAdapter(adaptre)其中listView中的View就像插座一样,而adapter就像插头一样,把各种各样的数据插入到ListView中显示出来
+
+	装饰器模式：android.content.ContextWrapper类，继承自Context，具体实现是通过组合的方式调用ContextImpl类的实例（在ContextWrapper中的private属			性mBase）来完成的。可以看出ContextWrapper就是“装饰模式”里的Decorator。Android的界面组件Activity、服务组件Service以及应用基类Application都派生于		ContextWrapper，它们可以通过重载来修改Context接口的实现。所以Activity、服务组件Service以及应用基类Application就是“装饰模式”里的具体装饰角色
+	
+	代理模式：class ActivityManagerProxy implements IActivityManager{...}代理模式在IPc通信中用的颇多，本质上IActivityManager就是多进程通信时客户端与
+	服务端之间的代理接口
+	
+	外观模式：外观模式非常的简单，只是封装了子系统的操作，并且暴露接口给外界使用而已
+
+	桥接模式：AdapterView跟Adapter之间就是一个桥接模式。桥接模式是解决两个需要独立扩展的模块之间的连接问题，其中AdapterView可以存在很多个子View例如：
+	ListView，GridView而Adapter同样可以有多种子类如ListAdapter，SimpleArrayAdapter
+
+	组合模式：android中的View树型结构是一种典型的组合模式，组合模式主要是树形数据结构的递归算法
+
+	享元模式：Message通过obtain方法从对象池获取，Message通过recycle归还给对象池，达到循环利用，享元模式是对象池的一种实现，尽可能减少内存的使用
+
+	策略模式：ValueAnimator.setInterpolator(TimeInterpolator value)本质就是让算法独立于使用它的客户而独立变化，例如(TimeInterpolator就是独立的算法
+
+	模板方法模式：例如AsyncTask的具体实现都会包含onPreExecute,doInBackground,onPostExecute这几个方法，就像一个模板一样遵循固定的执行流程
+
+	观察者模式：这个就太多了，我们平时view.setOnClickListener（new OnCllickListener（）{...}）都属于观察者模式了
+
+	迭代器模式：最典型的就是当我们使用SQLiteDatabase的query方法时返回的Cursor对象，Cursor用到了迭代器模式，与Java中就有迭代器Iterator类似
+
+	责任链模式：最典型的应当是安卓的事件分发了，Event由Activity到根节点View在到叶子节点View传递然后再由叶子节点到根节点View再到Activity指导找到处理者
+
+	命令模式：PackageManagerService对应用包的解析、管理、卸载等操作
+
+	备忘录模式：onSaveInstanceState和onRestoreInstanceState 在安卓View体系以及Acivity，Fragment中都可以使用这种方法进行状态的备忘，以便重新启动时恢复
+
+	状态模式：这个也太多了，无非就是用一个变量来记录某种状态，然后再程序执行的时候判断这个状态执行不同的流程而已，这个在处理Event事件的时候用的特别多
+
+	访问者模式：访问者模式即表示一个作用于某对象结构中的各元素的操作，它使我们可以在不改变各元素的类的前提下定义作用于这些元素的新操作。
+	首先我们要明确一点就是访问者模式适用于数据结构相对稳定的系统
+
+	中介者模式：中介者模式将多对多的相互作用转化为一对多的相互作用，EditText的addTextChangedListener监听输入判断时根据不同的输入做出不同的响应，此时需		要多个控件交互，是由Activity或其父容器充当中介者来协调
+
+	解释器模式：PackageParser类其实对应AndroidManifest.xml配置文件中的一个个标签，也就是一条文法。解释器模式是一种用得比较少的型设计模式，它提供了			一种解释语言或者说是表达式的，该模式定义了一个表达式接口，然后通过该接口解释一个特定的上下文。解释器模式使用得相对较少，所以了解一即可。
+
+	
+
+
+设计模式有六大原则
+
+a开闭原则：
+对扩展开放，对修改关闭。实现一个热插拔的效果，想要达到这样的效果，我们需要使用接口和抽象类
+
+b里氏代换原则：
+任何基类可以出现的地方，子类一定可以出现，因为只有当衍生类可以替换掉基类，软件单位的功能不受到影响时，基类才能真正被复用
+
+c依赖倒转原则：
+这个是开闭原则的基础，具体就是依赖于抽象而不依赖于具体。
+
+d接口隔离原则：
+这个原则的意思是：使用多个隔离的接口，比使用单个接口要好
+
+e迪米特法则（最少知道原则）：
+就是说一个实体应当尽量少的与其他实体之间存在引用关系，使功能模块之间相对独立。
+
+f合成复用原则：
+即尽量使用合成/聚合的方式（或者说成员变量），而不是使用继承。
+
+总结：
+设计模式本质上就是对具体功能或模块进行抽象，而具体在代码中就是：将语句抽象成方法，将方法抽象成类，将类抽象成接口，将继承转化为聚合
+
+
+
