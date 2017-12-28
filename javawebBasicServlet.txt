@@ -1,0 +1,12 @@
+Servlet是一个小java程序
+
+可以继承GenericServlect重写service方法实现功能
+
+配置Sevlect信息：
+	在web.xml中添加节点:
+	<servlet><servlet-name></servlet-name><servlet-class></servlet>
+	<servlet-mapping><servlet-name></url-pattern><url-pattern></servlet-mapping>
+
+生命周期：创建;init(ServlectConfig conficg)初始化;service(res,rep)处理请求响应;服务器中移除servlect调用destroy();
+
+可以配置服务器启动的时候就创建servlet实例
